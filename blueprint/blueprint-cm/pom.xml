@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.apache.aries.blueprint</groupId>
+        <artifactId>blueprint-parent</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../blueprint-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>org.apache.aries.blueprint</groupId>
+    <artifactId>org.apache.aries.blueprint.cm</artifactId>
+    <packaging>bundle</packaging>
+    <version>1.3.3-SNAPSHOT</version>
+    <name>Apache Aries Blueprint CM</name>
+    <description>
+        This bundle contains the ConfigAdmin namespace for blueprint.
+    </description>
+
+    <scm>
+        <connection>scm:git:https://gitbox.apache.org/repos/asf/aries.git</connection>
+        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/aries.git</developerConnection>
+        <url>https://gitbox.apache.org/repos/asf?p=aries.git;a=summary</url>
+      <tag>HEAD</tag>
+  </scm>
+
+    <properties>
+        <!-- Export package versions are maintained in packageinfo files -->
+        <aries.osgi.export.pkg />
+        <aries.osgi.import.pkg>
+           org.apache.aries.blueprint;provide:=true;version="[1.0,2.0)",
+           org.apache.aries.blueprint.ext;provide:=true;version="[1.0,2.0)",
+           *
+        </aries.osgi.import.pkg>
+        <aries.osgi.private.pkg>
+            org.apache.aries.blueprint.compendium.cm
+        </aries.osgi.private.pkg>
+
+        <blueprint.api.version>1.0.1</blueprint.api.version>
+        <blueprint.core.version>1.10.3</blueprint.core.version>
+        <blueprint.parser.version>1.6.0</blueprint.parser.version>
+        <lastReleaseVersion>1.1.0</lastReleaseVersion>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <blueprint.api.version>${blueprint.api.dev.version}</blueprint.api.version>
+                <blueprint.core.version>${blueprint.core.dev.version}</blueprint.core.version>
+                <blueprint.cm.version>${blueprint.cm.dev.version}</blueprint.cm.version>
+                <blueprint.parser.version>${blueprint.parser.dev.version}</blueprint.parser.version>
+                <blueprint.authz.version>${blueprint.authz.dev.version}</blueprint.authz.version>
+                <blueprint.spring.version>${blueprint.spring.dev.version}</blueprint.spring.version>
+                <blueprint.spring.extender.version>${blueprint.spring.extender.dev.version}</blueprint.spring.extender.version>
+                <blueprint.jexl.evaluator.version>${blueprint.jexl.evaluator.dev.version}</blueprint.jexl.evaluator.version>
+                <blueprint.sample.version>${blueprint.sample.dev.version}</blueprint.sample.version>
+                <blueprint.sample.fragment.version>${blueprint.sample.fragment.dev.version}</blueprint.sample.fragment.version>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.aries.blueprint</groupId>
+            <artifactId>org.apache.aries.blueprint.api</artifactId>
+            <version>${blueprint.api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.aries.blueprint</groupId>
+            <artifactId>blueprint-parser</artifactId>
+            <version>1.6.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.aries.blueprint</groupId>
+            <artifactId>org.apache.aries.blueprint.core</artifactId>
+            <version>1.10.0</version>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.apache.aries</groupId>
+            		<artifactId>org.apache.aries.util</artifactId>
+            	</exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <scope>provided</scope>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.pojosr</groupId>
+            <artifactId>de.kalpatec.pojosr.framework</artifactId>
+            <version>0.1.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.swissbox</groupId>
+            <artifactId>pax-swissbox-tinybundles</artifactId>
+            <version>1.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.aries.proxy</groupId>
+            <artifactId>org.apache.aries.proxy</artifactId>
+            <version>1.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.configadmin</artifactId>
+            <version>1.2.8</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.aries.versioning</groupId>
+                <artifactId>org.apache.aries.versioning.plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-verify</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>version-check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.2</version>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
